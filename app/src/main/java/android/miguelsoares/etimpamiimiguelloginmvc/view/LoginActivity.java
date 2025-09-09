@@ -1,10 +1,11 @@
 package android.miguelsoares.etimpamiimiguelloginmvc.view;
 
+import android.content.Intent;
 import android.miguelsoares.etimpamiimiguelloginmvc.R;
 import android.miguelsoares.etimpamiimiguelloginmvc.controller.UsuarioController;
 import android.miguelsoares.etimpamiimiguelloginmvc.model.Usuario;
 import android.os.Bundle;
-import android.text.Editable;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,17 +16,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     UsuarioController controller;
     Usuario usuario;
     Button cadastrar, entrar;
-    EditText nomeUsuario, emailUsuario, senhaUsuario;
+    EditText emailUsuario, senhaUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         initComponents();
 
@@ -35,14 +36,20 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        cadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+                startActivity(intent);
+            }
+        });
+
         entrar.setOnClickListener(view -> {
             if ( validaCampos() ) {
                 usuario = new Usuario();
-                String nome  = nomeUsuario.getText().toString();
                 String email = emailUsuario.getText().toString();
                 String senha = senhaUsuario.getText().toString();
 
-                usuario.setNome(nome);
                 usuario.setEmail(email);
                 usuario.setSenha(senha);
 
@@ -63,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean validaCampos() {
         boolean camposValidados = false;
-        if( nomeUsuario.getText().toString().isEmpty() ||
-            emailUsuario.getText().toString().isEmpty() ||
+        if( emailUsuario.getText().toString().isEmpty() ||
             senhaUsuario.getText().toString().isEmpty() ) {
             camposValidados = false;
         } else {
@@ -74,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
-        nomeUsuario  = findViewById(R.id.nome);
         emailUsuario = findViewById(R.id.email);
         senhaUsuario = findViewById(R.id.senha);
         cadastrar    = findViewById(R.id.cadastrar);
