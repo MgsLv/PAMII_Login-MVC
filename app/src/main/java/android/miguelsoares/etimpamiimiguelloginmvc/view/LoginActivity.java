@@ -58,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
                 boolean isCheckUser = controller.checkUser( email );
                 boolean isCheckPass = controller.checkUserPassword( email, senha );
                 if ( isCheckUser && isCheckPass ) {
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
                     Toast.makeText(this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Usuário ou senha incorretos!", Toast.LENGTH_SHORT).show();
